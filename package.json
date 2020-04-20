@@ -1,0 +1,35 @@
+{
+  "name": "@volkovasystem/trigger",
+  "version": "0.0.0",
+  "description": "Trigger class interface for procedure issue flow.",
+  "main": "trigger.js",
+  "scripts": {
+    "test": "test trigger.test.js",
+	"minify-module": "npx terser option.module.js --compress --output option.js",
+	"modularize": "npx babel --plugins @babel/plugin-transform-modules-umd option.js --out-file option.js",
+	"minify": "npx terser option.js --compress --output option.js",
+	"build": "npm run minify-module && npm run modularize && npm run minify",
+	"prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/volkovasystem/trigger.git"
+  },
+  "keywords": [
+    "trigger",
+    "error",
+    "issue",
+    "abort"
+  ],
+  "author": "Richeve S. Bebedor <richeve.bebedor@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/volkovasystem/trigger/issues"
+  },
+  "homepage": "https://github.com/volkovasystem/trigger#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-transform-modules-umd": "^7.9.0"
+  }
+}
