@@ -5,7 +5,20 @@
 		MIT License
 
 		Copyright (c) 2020 Richeve S. Bebedor <richeve.bebedor@gmail.com>
-		@copyright: Richeve S. Bebedor <@year: 2020> <@contact: richeve.bebedor@gmail.com>
+
+		@copyright:
+			Richeve S. Bebedor
+			<
+				@year:
+					2020
+				@end-year
+			>
+			<
+				@contact:
+					richeve.bebedor@gmail.com
+				@end-contact
+			>
+		@end-copyright
 
 		Permission is hereby granted, free of charge, to any person obtaining a copy
 		of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +47,9 @@ const SYMBOL_NAMESPACE_PATTERN = (
 const Trigger = (
 	function Trigger( trigger ){
 		/*;
+			@class-procedure-definition:
+			@end-class-procedure-definition
+
 			@parameter-definition:
 				{
 					"trigger": "
@@ -43,6 +59,7 @@ const Trigger = (
 								|	object as Error
 								|	string
 								|	symbol
+							@end-type
 						]
 					"
 				}
@@ -50,9 +67,77 @@ const Trigger = (
 
 			@result-definition:
 				{
-					"result": "[@type: object as Trigger]"
+					"result": "
+						[
+							@type:
+									object as Trigger
+							@end-type
+						]
+					"
 				}
 			@end-result-definition
+
+			@static-property-definition:
+				{
+					"namespace": "
+						[
+							@type:
+									string
+
+								<
+									@default-value:
+										Trigger
+									@end-default-value
+								>
+							@end-type
+
+							<
+								@property-definition:
+								@end-property-definition
+							>
+						]
+					",
+
+					"type": "
+						[
+							@type:
+									object as Array of string
+
+								<
+									@default-value:
+										class
+										object
+										trigger
+									@end-default-value
+								>
+							@end-type
+
+							<
+								@property-definition:
+								@end-property-definition
+							>
+						]
+					",
+				}
+			@end-static-property-definition
+
+			@static-procedure-definition:
+				{
+					"checkTrigger": "
+						[
+							@type:
+									function as checkTrigger
+							@end-type
+
+							<
+								@procedure-definition:
+									Check if object instance of Trigger class.
+								@end-procedure-definition
+							>
+						]
+					"
+				}
+			@end-static-procedure-definition
 		*/
 
 		if(
@@ -87,18 +172,26 @@ const Trigger = (
 							.set(
 								this,
 
-								{
-									"trigger": trigger,
-									"state": (
-										Object
-										.freeze(
-											[
-												Trigger
-												.ERROR_STATE
-											]
-										)
+								(
+									Object
+									.freeze(
+										{
+											"trigger": (
+												trigger
+											),
+
+											"state": (
+												Object
+												.freeze(
+													[
+														Trigger
+														.ERROR_STATE
+													]
+												)
+											)
+										}
 									)
-								}
+								)
 							)
 						),
 
@@ -129,27 +222,33 @@ const Trigger = (
 							.set(
 								this,
 
-								{
-									"trigger": (
-										Symbol
-										.for(
-											trigger
-											.toString( )
-											.match(
-												SYMBOL_NAMESPACE_PATTERN
-											)[ 1 ]
-										)
-									),
-									"state": (
-										Object
-										.freeze(
-											[
-												Trigger
-												.ABORTED_STATE
-											]
-										)
+								(
+									Object
+									.freeze(
+										{
+											"trigger": (
+												Symbol
+												.for(
+													trigger
+													.toString( )
+													.match(
+														SYMBOL_NAMESPACE_PATTERN
+													)[ 1 ]
+												)
+											),
+
+											"state": (
+												Object
+												.freeze(
+													[
+														Trigger
+														.ABORTED_STATE
+													]
+												)
+											)
+										}
 									)
-								}
+								)
 							)
 						),
 
@@ -186,24 +285,29 @@ const Trigger = (
 							.set(
 								this,
 
-								{
-									"trigger": (
-										Symbol
-										.for(
-											trigger
-										)
-									),
+								(
+									Object
+									.freeze(
+										{
+											"trigger": (
+												Symbol
+												.for(
+													trigger
+												)
+											),
 
-									"state": (
-										Object
-										.freeze(
-											[
-												Trigger
-												.ABORTED_STATE
-											]
-										)
+											"state": (
+												Object
+												.freeze(
+													[
+														Trigger
+														.ABORTED_STATE
+													]
+												)
+											)
+										}
 									)
-								}
+								)
 							)
 						),
 
@@ -234,46 +338,53 @@ const Trigger = (
 							.set(
 								this,
 
-								{
-									"trigger": trigger,
+								(
+									Object
+									.freeze(
+										{
+											"trigger": (
+												trigger
+											),
 
-									"state": (
-										Object
-										.freeze(
-											[
-												(
-													Trigger
-													.ABORTED_STATE
-												),
+											"state": (
+												Object
+												.freeze(
+													[
+														(
+															Trigger
+															.ABORTED_STATE
+														),
 
-												(
 														(
 																(
-																		trigger
-																	===	false
+																		(
+																				trigger
+																			===	false
+																		)
 																)
+															?	(
+																	Trigger
+																	.UNDEFINED_STATE
+																)
+															:	undefined
 														)
-													?	(
-															Trigger
-															.UNDEFINED_STATE
-														),
-													:	undefined
-												)
-											]
-											.filter(
-												( state ) => (
-													(
+													]
+													.filter(
+														( state ) => (
 															(
-																	typeof
-																	state
-																!=	"undefined"
+																	(
+																			typeof
+																			state
+																		!=	"undefined"
+																	)
 															)
+														)
 													)
 												)
 											)
-										)
+										}
 									)
-								}
+								)
 							)
 						),
 
@@ -381,9 +492,12 @@ Object
 		"value": (
 			function checkTrigger( entity ){
 				/*;
+					@procedure-definition:
+					@end-procedure-definition
+
 					@parameter-definition:
 						{
-							"entity": "
+							"entity":"
 								[
 									@type:
 											boolean
@@ -393,8 +507,9 @@ Object
 										|	string
 										|	symbol
 										|	undefined
+									@end-type
 
-									<@required>
+									<@required;>
 								]
 							"
 						}
@@ -402,7 +517,12 @@ Object
 
 					@result-definition:
 						{
-							"result": "[@type: boolean]"
+							"result": "
+								[
+									@type:
+											boolean
+								]
+							"
 						}
 					@end-result-definition
 				*/
@@ -427,8 +547,10 @@ Object
 												(
 														typeof
 														(
-															option
-															.constructor
+															(
+																option
+																.constructor
+															)
 															.namespace
 														)
 													==	"string"
@@ -436,9 +558,11 @@ Object
 
 											&&	(
 														(
-															option
-															.constructor
-															.namespace
+															(
+																option
+																.constructor
+																.namespace
+															)
 															.length
 														)
 													>	0
@@ -446,8 +570,10 @@ Object
 
 											&&	(
 														(
-															option
-															.constructor
+															(
+																option
+																.constructor
+															)
 															.namespace
 														)
 													===	(
@@ -484,12 +610,16 @@ Object
 
 											&&	(
 														(
-															Trigger
-															.type
+															(
+																Trigger
+																.type
+															)
 															.every(
 																( type ) => (
-																	entity
-																	.$type
+																	(
+																		entity
+																		.$type
+																	)
 																	.includes(
 																		type
 																	)
@@ -558,6 +688,9 @@ Object
 Trigger.prototype.setTrigger = (
 	function setTrigger( trigger ){
 		/*;
+			@procedure-definition:
+			@end-procedure-definition
+
 			@parameter-definition:
 				{
 					"trigger": "
@@ -567,6 +700,7 @@ Trigger.prototype.setTrigger = (
 								|	object as Error
 								|	string
 								|	symbol
+							@end-type
 						]
 					"
 				}
@@ -578,8 +712,11 @@ Trigger.prototype.setTrigger = (
 						[
 							@type:
 									object as Error
+							@end-type
 
-							<@tag: invalid-set-trigger>
+							<@tag: set-trigger-done;>
+							<@tag: invalid-set-trigger;>
+							<@tag: undefined-set-trigger-flow;>
 						]
 					"
 				}
@@ -587,7 +724,13 @@ Trigger.prototype.setTrigger = (
 
 			@result-definition:
 				{
-					"result": "[@type: object as Trigger]"
+					"result": "
+						[
+							@type:
+									object as Trigger
+							@end-type
+						]
+					"
 				}
 			@end-result-definition
 		*/
@@ -595,8 +738,33 @@ Trigger.prototype.setTrigger = (
 		if(
 				(
 						typeof
+						(
+							this
+							.getScope( )
+						)
+						.trigger
+					!=	"undefined"
+				)
+		){
+			throw	(
+						new	Error(
+								[
+									"#set-trigger-done;",
+
+									"cannot set trigger",
+									"set trigger done",
+
+									`@trigger: ${ this.getScope( ).trigger }`
+								]
+							)
+					);
+		}
+
+		if(
+				(
+						typeof
 						trigger
-					!= "boolean"
+					!=	"boolean"
 				)
 
 			&&	(
@@ -656,19 +824,68 @@ Trigger.prototype.setTrigger = (
 
 		if(
 				(
+						(
+										trigger
+							instanceof	Error
+						)
+					===	true
+				)
+		){
+			this
+			.setScope(
+				Object
+				.freeze(
+					{
+						"trigger": (
+							trigger
+						),
+
+						"state": (
+							Object
+							.freeze(
+								[
+									Trigger
+									.ERROR_STATE
+								]
+							)
+						)
+					}
+				)
+			);
+		}
+		else if(
+				(
 						typeof
 						trigger
 					==	"symbol"
 				)
 		){
-			trigger = (
-				Symbol
-				.for(
-					trigger
-					.toString( )
-					.match(
-						SYMBOL_NAMESPACE_PATTERN
-					)[ 1 ]
+			this
+			.setScope(
+				Object
+				.freeze(
+					{
+						"trigger": (
+							Symbol
+							.for(
+								trigger
+								.toString( )
+								.match(
+									SYMBOL_NAMESPACE_PATTERN
+								)[ 1 ]
+							)
+						),
+
+						"state": (
+							Object
+							.freeze(
+								[
+									Trigger
+									.ABORTED_STATE
+								]
+							)
+						)
+					}
 				)
 			);
 		}
@@ -679,18 +896,103 @@ Trigger.prototype.setTrigger = (
 					==	"string"
 				)
 		){
-			trigger = (
-				Symbol
-				.for(
-					trigger
+			this
+			.setScope(
+				Object
+				.freeze(
+					{
+						"trigger": (
+							Symbol
+							.for(
+								trigger
+							)
+						),
+
+						"state": (
+							Object
+							.freeze(
+								[
+									Trigger
+									.ABORTED_STATE
+								]
+							)
+						)
+					}
 				)
 			);
 		}
-
+		else if(
+				(
+						typeof
+						trigger
+					==	"boolean"
+				)
+		){
 			this
-			.getScope( )
-			.trigger
-		=	trigger;
+			.setScope(
+				Object
+				.freeze(
+					{
+						"trigger": (
+							trigger
+						),
+
+						"state": (
+							Object
+							.freeze(
+								[
+									(
+										Trigger
+										.ABORTED_STATE
+									),
+
+									(
+											(
+													(
+															trigger
+														===	false
+													)
+											)
+										?	(
+												Trigger
+												.UNDEFINED_STATE
+											)
+										:	(
+												undefined
+											)
+									)
+								]
+								.filter(
+									( state ) => (
+										(
+												(
+														typeof
+														state
+													!=	"undefined"
+												)
+										)
+									)
+								)
+							)
+						)
+					}
+				)
+			);
+		}
+		else{
+			throw	(
+						new	Error(
+								[
+									"#undefined-set-trigger-flow",
+
+									"cannot set trigger",
+									"undefined behavior",
+
+									`@trigger: ${ trigger }`
+								]
+							)
+					);
+		}
 
 		return	this;
 	}
@@ -699,6 +1001,9 @@ Trigger.prototype.setTrigger = (
 Trigger.prototype.getTrigger = (
 	function getTrigger( ){
 		/*;
+			@procedure-definition:
+			@end-procedure-definition
+
 			@result-definition:
 				{
 					"result": "
@@ -707,6 +1012,7 @@ Trigger.prototype.getTrigger = (
 									boolean
 								|	object as Error
 								|	symbol
+							@end-type
 						]
 					"
 				}
@@ -714,8 +1020,10 @@ Trigger.prototype.getTrigger = (
 		*/
 
 		return	(
-					this
-					.getScope( )
+					(
+						this
+						.getScope( )
+					)
 					.trigger
 				);
 	}
@@ -724,6 +1032,9 @@ Trigger.prototype.getTrigger = (
 Trigger.prototype.checkTrigger = (
 	function checkTrigger( triggerQuery ){
 		/*;
+			@procedure-definition:
+			@end-procedure-definition
+
 			@parameter-definition:
 				{
 					"triggerQuery": "
@@ -734,8 +1045,9 @@ Trigger.prototype.checkTrigger = (
 								|	object as Error
 								|	string
 								|	symbol
+							@end-type
 
-							<@optional>
+							<@optional;>
 						]
 					"
 				}
@@ -743,10 +1055,17 @@ Trigger.prototype.checkTrigger = (
 
 			@result-definition:
 				{
-					"result": "[@type: boolean]"
+					"result": "
+						[
+							@type:
+									boolean
+							@end-type
+						]
+					"
 				}
 			@end-result-definition
 		*/
+
 		const trigger = (
 			this
 			.getTrigger( )
@@ -882,6 +1201,37 @@ Trigger.prototype.checkTrigger = (
 
 Trigger.prototype.checkState = (
 	function checkState( stateQuery ){
+		/*;
+			@procedure-definition:
+			@end-procedure-definition
+
+			@parameter-definition:
+				{
+					"stateQuery": "
+						[
+							@type:
+									string
+							@end-type
+
+							<@optional;>
+						]
+					"
+				}
+			@end-parameter-definition
+
+			@result-definition:
+				{
+					"result": "
+						[
+							@type:
+									boolean
+							@end-type
+						]
+					"
+				}
+			@end-result-definition
+		*/
+
 		if(
 				(
 						typeof
@@ -895,7 +1245,31 @@ Trigger.prototype.checkState = (
 					>	0
 				)
 		){
+			return	(
+							(
+									stateQuery
+								===	(
+										Trigger
+										.ERROR_STATE
+									)
+							)
 
+						||	(
+									stateQuery
+								===	(
+										Trigger
+										.ABORTED_STATE
+									)
+							)
+
+						||	(
+									stateQuery
+								===	(
+										Trigger
+										.UNDEFINED_STATE
+									)
+							)
+					);
 		}
 		else{
 			return	undefined;
@@ -910,14 +1284,29 @@ Trigger.prototype.setScope = (
 				Set trigger data container scope.
 			@end-procedure-definition
 
+			@parameter-definition:
+				{
+					"scopeData": "
+						[
+							@type:
+									object
+							@end-type
+
+							<@required;>
+						]
+					"
+				}
+			@end-parameter-definition
+
 			@trigger-definition:
 				{
 					"trigger": "
 						[
 							@type:
-								object as Error
+									object as Error
+							@end-type
 
-							<@tag: invalid-set-trigger-scope-data>
+							<@tag: invalid-set-trigger-scope-data;>
 						]
 					"
 				}
@@ -925,7 +1314,13 @@ Trigger.prototype.setScope = (
 
 			@result-definition:
 				{
-					"result": "[@type: object as Trigger]"
+					"result": "
+						[
+							@type:
+									object as Trigger
+							@end-type
+						]
+					"
 				}
 			@end-result-definition
 		*/
@@ -942,8 +1337,10 @@ Trigger.prototype.setScope = (
 					!==	null
 				)
 		){
-			this
-			.$triggerData
+			(
+				this
+				.$triggerData
+			)
 			.set(
 				this,
 				scopeData
@@ -977,14 +1374,22 @@ Trigger.prototype.getScope = (
 
 			@result-definition:
 				{
-					"result": "[@type: object]"
+					"result": "
+						[
+							@type:
+									object
+							@end-type
+						]
+					"
 				}
 			@end-result-definition
 		*/
 
 		return	(
-					this
-					.$triggerData
+					(
+						this
+						.$triggerData
+					)
 					.get(
 						this
 					)
@@ -995,9 +1400,18 @@ Trigger.prototype.getScope = (
 Trigger.prototype.valueOf = (
 	function valueOf( ){
 		/*;
+			@procedure-definition:
+			@end-procedure-definition
+
 			@result-definition:
 				{
-					"result": "[@type: object]"
+					"result": "
+						[
+							@type:
+									object
+							@end-type
+						]
+					"
 				}
 			@end-result-definition
 		*/
@@ -1022,27 +1436,40 @@ Trigger.prototype.valueOf = (
 Trigger.prototype.toString = (
 	function toString( ){
 		/*;
+			@procedure-definition:
+			@end-procedure-definition
+
 			@result-definition:
 				{
-					"result": "[@type: string]"
+					"result": "
+						[
+							@type:
+									string
+							@end-type
+						]
+					"
 				}
 			@end-result-definition
 		*/
 
 		if(
-				typeof
-				require
-			==	"function"
+				(
+						typeof
+						require
+					==	"function"
+				)
 		){
 			const util = require( "util" );
 
 			if(
-					typeof
 					(
-						util
-						.inspect
+							typeof
+							(
+								util
+								.inspect
+							)
+						==	"function"
 					)
-				==	"function"
 			){
 				return	(
 							util
