@@ -5,11 +5,13 @@
   "main": "trigger.js",
   "scripts": {
     "test": "node ./trigger.test.js",
-    "minify-module": "npx terser trigger.module.js --compress --output trigger.js",
-    "modularize": "npx babel --plugins @babel/plugin-transform-modules-umd trigger.js --out-file trigger.js",
-    "minify": "npx terser trigger.js --compress --output trigger.js",
-    "build": "npm run minify-module && npm run modularize && npm run minify",
-    "prepublishOnly": "npm test && npm run build"
+    "clean": "rm -Rfv ./node_modules && rm ./trigger.js",
+    "compress": "npx terser ./trigger.module.js --compress --comments all --output ./trigger.js",
+    "modularize": "npx babel --plugins @babel/plugin-transform-modules-umd ./trigger.js --out-file ./trigger.js",
+    "minify": "npx terser ./trigger.js --compress --comments all --output ./trigger.js",
+    "build": "npm run compress && npm run modularize && npm run minify",
+    "deploy": "npm run clean && npm install && npm run build && npm test",
+    "prepublishOnly": "npm run clean && npm install && npm run build && npm test"
   },
   "repository": {
     "type": "git",
