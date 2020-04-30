@@ -1,6 +1,6 @@
 {
   "name": "@volkovasystem/trigger",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Trigger class interface for procedure issue flow.",
   "main": "trigger.js",
   "scripts": {
