@@ -175,21 +175,34 @@ const Trigger = (
 								(
 									Object
 									.freeze(
-										{
-											"trigger": (
-												trigger
-											),
+										Object
+										.defineProperties(
+											{ },
 
-											"state": (
-												Object
-												.freeze(
-													[
-														Trigger
-														.ERROR_STATE
-													]
-												)
-											)
-										}
+											{
+												"trigger": {
+													"value": (
+														trigger
+													),
+
+													"enumerable": false
+												},
+
+												"state": {
+													"value": (
+														Object
+														.freeze(
+															[
+																Trigger
+																.ERROR_STATE
+															]
+														)
+													),
+
+													"enumerable": false
+												}
+											}
+										)
 									)
 								)
 							)
@@ -225,28 +238,41 @@ const Trigger = (
 								(
 									Object
 									.freeze(
-										{
-											"trigger": (
-												Symbol
-												.for(
-													trigger
-													.toString( )
-													.match(
-														SYMBOL_NAMESPACE_PATTERN
-													)[ 1 ]
-												)
-											),
+										Object
+										.defineProperties(
+											{ },
 
-											"state": (
-												Object
-												.freeze(
-													[
-														Trigger
-														.ABORTED_STATE
-													]
-												)
-											)
-										}
+											{
+												"trigger": {
+													"value": (
+														Symbol
+														.for(
+															trigger
+															.toString( )
+															.match(
+																SYMBOL_NAMESPACE_PATTERN
+															)[ 1 ]
+														)
+													),
+
+													"enumerable": false
+												},
+
+												"state": {
+													"value": (
+														Object
+														.freeze(
+															[
+																Trigger
+																.ABORTED_STATE
+															]
+														)
+													),
+
+													"enumerable": false
+												}
+											}
+										)
 									)
 								)
 							)
@@ -288,24 +314,37 @@ const Trigger = (
 								(
 									Object
 									.freeze(
-										{
-											"trigger": (
-												Symbol
-												.for(
-													trigger
-												)
-											),
+										Object
+										.defineProperties(
+											{ },
 
-											"state": (
-												Object
-												.freeze(
-													[
-														Trigger
-														.ABORTED_STATE
-													]
-												)
-											)
-										}
+											{
+												"trigger": {
+													"value": (
+														Symbol
+														.for(
+															trigger
+														)
+													),
+
+													"enumerable": false
+												},
+
+												"state": {
+													"value": (
+														Object
+														.freeze(
+															[
+																Trigger
+																.ABORTED_STATE
+															]
+														)
+													),
+
+													"enumerable": false
+												}
+											}
+										)
 									)
 								)
 							)
@@ -341,50 +380,63 @@ const Trigger = (
 								(
 									Object
 									.freeze(
-										{
-											"trigger": (
-												trigger
-											),
+										Object
+										.defineProperties(
+											{ },
 
-											"state": (
-												Object
-												.freeze(
-													[
-														(
-															Trigger
-															.ABORTED_STATE
-														),
+											{
+												"trigger": {
+													"value": (
+														trigger
+													),
 
-														(
+													"enumerable": false
+												},
+
+												"state": {
+													"value": (
+														Object
+														.freeze(
+															[
+																(
+																	Trigger
+																	.ABORTED_STATE
+																),
+
 																(
 																		(
-																				trigger
-																			===	false
+																				(
+																						trigger
+																					===	false
+																				)
+																		)
+																	?	(
+																			Trigger
+																			.UNDEFINED_STATE
+																		)
+																	:	(
+																			undefined
 																		)
 																)
-															?	(
-																	Trigger
-																	.UNDEFINED_STATE
-																)
-															:	(
-																	undefined
-																)
-														)
-													]
-													.filter(
-														( state ) => (
-															(
+															]
+															.filter(
+																( state ) => (
 																	(
-																			typeof
-																			state
-																		!=	"undefined"
+																			(
+																					typeof
+																					state
+																				!=	"undefined"
+																			)
 																	)
+																)
 															)
 														)
-													)
-												)
-											)
-										}
+													),
+
+													"enumerable": false
+												}
+											}
+										)
 									)
 								)
 							)
@@ -813,7 +865,7 @@ Trigger.prototype.setTrigger = (
 			throw	(
 						new	Error(
 								[
-									"#invalid-set-trigger",
+									"#invalid-set-trigger;",
 
 									"cannot set trigger",
 									"invalid trigger",
@@ -837,21 +889,34 @@ Trigger.prototype.setTrigger = (
 			.setScope(
 				Object
 				.freeze(
-					{
-						"trigger": (
-							trigger
-						),
+					Object
+					.defineProperties(
+						{ },
 
-						"state": (
-							Object
-							.freeze(
-								[
-									Trigger
-									.ERROR_STATE
-								]
-							)
-						)
-					}
+						{
+							"trigger": {
+								"value": (
+									trigger
+								),
+
+								"enumerable": false
+							},
+
+							"state": {
+								"value": (
+									Object
+									.freeze(
+										[
+											Trigger
+											.ERROR_STATE
+										]
+									)
+								),
+
+								"enumerable": false
+							}
+						}
+					)
 				)
 			);
 		}
@@ -866,28 +931,41 @@ Trigger.prototype.setTrigger = (
 			.setScope(
 				Object
 				.freeze(
-					{
-						"trigger": (
-							Symbol
-							.for(
-								trigger
-								.toString( )
-								.match(
-									SYMBOL_NAMESPACE_PATTERN
-								)[ 1 ]
-							)
-						),
+					Object
+					.defineProperties(
+						{ },
 
-						"state": (
-							Object
-							.freeze(
-								[
-									Trigger
-									.ABORTED_STATE
-								]
-							)
-						)
-					}
+						{
+							"trigger": {
+								"value": (
+									Symbol
+									.for(
+										trigger
+										.toString( )
+										.match(
+											SYMBOL_NAMESPACE_PATTERN
+										)[ 1 ]
+									)
+								),
+
+								"enumerable": false
+							},
+
+							"state": {
+								"value": (
+									Object
+									.freeze(
+										[
+											Trigger
+											.ABORTED_STATE
+										]
+									)
+								),
+
+								"enumerable": false
+							}
+						}
+					)
 				)
 			);
 		}
@@ -902,24 +980,37 @@ Trigger.prototype.setTrigger = (
 			.setScope(
 				Object
 				.freeze(
-					{
-						"trigger": (
-							Symbol
-							.for(
-								trigger
-							)
-						),
+					Object
+					.defineProperties(
+						{ },
 
-						"state": (
-							Object
-							.freeze(
-								[
-									Trigger
-									.ABORTED_STATE
-								]
-							)
-						)
-					}
+						{
+							"trigger": {
+								"value": (
+									Symbol
+									.for(
+										trigger
+									)
+								),
+
+								"enumerable": false
+							},
+
+							"state": {
+								"value": (
+									Object
+									.freeze(
+										[
+											Trigger
+											.ABORTED_STATE
+										]
+									)
+								),
+
+								"enumerable": false
+							}
+						}
+					)
 				)
 			);
 		}
@@ -934,50 +1025,63 @@ Trigger.prototype.setTrigger = (
 			.setScope(
 				Object
 				.freeze(
-					{
-						"trigger": (
-							trigger
-						),
+					Object
+					.defineProperties(
+						{ },
 
-						"state": (
-							Object
-							.freeze(
-								[
-									(
-										Trigger
-										.ABORTED_STATE
-									),
+						{
+							"trigger": {
+								"value": (
+									trigger
+								),
 
-									(
+								"enumerable": false
+							},
+
+							"state": {
+								"value": (
+									Object
+									.freeze(
+										[
+											(
+												Trigger
+												.ABORTED_STATE
+											),
+
 											(
 													(
-															trigger
-														===	false
+															(
+																	trigger
+																===	false
+															)
+													)
+												?	(
+														Trigger
+														.UNDEFINED_STATE
+													)
+												:	(
+														undefined
 													)
 											)
-										?	(
-												Trigger
-												.UNDEFINED_STATE
-											)
-										:	(
-												undefined
-											)
-									)
-								]
-								.filter(
-									( state ) => (
-										(
+										]
+										.filter(
+											( state ) => (
 												(
-														typeof
-														state
-													!=	"undefined"
+														(
+																typeof
+																state
+															!=	"undefined"
+														)
 												)
+											)
 										)
 									)
-								)
-							)
-						)
-					}
+								),
+
+								"enumerable": false
+							}
+						}
+					)
 				)
 			);
 		}
@@ -985,7 +1089,7 @@ Trigger.prototype.setTrigger = (
 			throw	(
 						new	Error(
 								[
-									"#undefined-set-trigger-flow",
+									"#undefined-set-trigger-flow;",
 
 									"cannot set trigger",
 									"undefined behavior",
