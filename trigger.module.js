@@ -1,24 +1,18 @@
 "use strict";
 
 /*;
-	@module-license:
+	@license:module:
 		MIT License
 
-		Copyright (c) 2020 Richeve S. Bebedor <richeve.bebedor@gmail.com>
+		Copyright (c) 2020-present Richeve S. Bebedor <richeve.bebedor@gmail.com>
 
-		@copyright:
+		@license:copyright:
 			Richeve S. Bebedor
-			<
-				@year:
-					2020
-				@end-year
-			>
-			<
-				@contact:
-					richeve.bebedor@gmail.com
-				@end-contact
-			>
-		@end-copyright
+
+			<@license:year-range:2020-present;>
+
+			<@license:contact-detail:richeve.bebedor@gmail.com;>
+		@license:copyright;
 
 		Permission is hereby granted, free of charge, to any person obtaining a copy
 		of this software and associated documentation files (the "Software"), to deal
@@ -37,108 +31,191 @@
 		LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 		OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 		SOFTWARE.
-	@end-module-license
+	@license:module;
 */
 
-const SYMBOL_NAMESPACE_PATTERN = (
-	/\((.+?)\)/
+const TRIGGER_CONTEXT = (
+	Symbol( "trigger-context" )
 );
 
 const Trigger = (
-	function Trigger( trigger ){
+	function Trigger( contextData, providerList ){
 		/*;
-			@class-procedure-definition:
-			@end-class-procedure-definition
+			@definition:
+				@class:#Trigger
+					@description:
+						Trigger class interface for procedure issue.
+					@description;
+				@class;
 
-			@parameter-definition:
-				{
-					"trigger": "
-						[
-							@type:
-									boolean
-								|	object as Error
-								|	string
-								|	symbol
-							@end-type
-						]
-					"
-				}
-			@end-parameter-definition
+				@parameter:#contextData
+					@type:
+							object
+					@type;
 
-			@result-definition:
-				{
-					"result": "
-						[
-							@type:
-									object as Trigger
-							@end-type
-						]
-					"
-				}
-			@end-result-definition
+					@description:
+					@description;
 
-			@static-property-definition:
-				{
-					"namespace": "
-						[
-							@type:
-									string
+					@optional;
+				@parameter;
 
-								<
-									@default-value:
-										Trigger
-									@end-default-value
-								>
-							@end-type
+				@parameter:#providerList
+					@type:
+							object:as:Array:of:function
+					@type;
 
-							<
-								@property-definition:
-								@end-property-definition
-							>
-						]
-					",
+					@description:
+					@description;
 
-					"type": "
-						[
-							@type:
-									object as Array of string
+					@optional;
+				@parameter;
 
-								<
-									@default-value:
-										class
-										object
-										trigger
-									@end-default-value
-								>
-							@end-type
+				@result:#result
+					@type:
+							object:as:Trigger
+					@type;
 
-							<
-								@property-definition:
-								@end-property-definition
-							>
-						]
-					",
-				}
-			@end-static-property-definition
+					@description:
+					@description;
+				@trigger;
 
-			@static-procedure-definition:
-				{
-					"checkTrigger": "
-						[
-							@type:
-									function as checkTrigger
-							@end-type
+				@trigger:#trigger
+					@type:
+							object:as:Error
+					@type;
 
-							<
-								@procedure-definition:
-									Check if object instance of Trigger class.
-								@end-procedure-definition
-							>
-						]
-					"
-				}
-			@end-static-procedure-definition
+					@description:
+					@description;
+				@trigger;
+			@definition;
 		*/
+
+		const resolveParameterList = (
+			function resolveParameterList( ){
+				const parameterList = (
+					Array
+					.from(
+						(
+							arguments
+						)
+					)
+				);
+
+				const contextCache = (
+					Object
+					.assign(
+						...	(
+								parameterList
+								.filter(
+									(
+										( parameter ) => (
+												(
+														typeof
+														parameter
+													==	"object"
+												)
+
+											&&	(
+														parameter
+													!==	null
+												)
+
+											&&	(
+														Array
+														.isArray(
+															(
+																parameter
+															)
+														)
+													!==	true
+												)
+										)
+									)
+								)
+								.concat(
+									(
+										[
+											{ }
+										]
+									)
+								)
+							)
+					)
+				);
+
+				const providerCache = (
+					parameterList
+					.reduce(
+						(
+							( list, parameter ) => {
+								if(
+										(
+												typeof
+												parameter
+											==	"function"
+										)
+								){
+									list
+									.push(
+										(
+											parameter
+										)
+									);
+								}
+								else if(
+										(
+												Array
+												.isArray(
+													(
+														parameter
+													)
+												)
+											===	true
+										)
+								){
+									parameter
+									.forEach(
+										(
+											( provider ) => {
+												if(
+														(
+																typeof
+																provider
+															==	"function"
+														)
+												){
+													list
+													.push(
+														(
+															provider
+														)
+													);
+												}
+											}
+										)
+									);
+								}
+
+								return	(
+											list
+										);
+							}
+						),
+
+						(
+							[ ]
+						)
+					)
+				);
+
+				return	(
+							[
+								contextCache,
+								providerCache
+							]
+						);
+			}
+		);
 
 		if(
 				(
@@ -149,1449 +226,946 @@ const Trigger = (
 					===	true
 				)
 		){
+			(
+					[
+						contextData,
+						providerList
+					]
+				=	(
+						resolveParameterList
+						.apply(
+							(
+								this
+							),
+
+							(
+								Array
+								.from(
+									(
+										arguments
+									)
+								)
+							)
+						)
+					)
+			);
+
 			if(
 					(
-							(
-											trigger
-								instanceof	Error
-							)
-						===	true
-					)
-			){
-				Object
-				.defineProperty(
-					this,
-
-					"$triggerData",
-
-					{
-						"value": (
-							(
-								new WeakMap( )
-							)
-							.set(
-								this,
-
-								(
-									Object
-									.freeze(
-										Object
-										.defineProperties(
-											{ },
-
-											{
-												"trigger": {
-													"value": (
-														trigger
-													),
-
-													"enumerable": false
-												},
-
-												"state": {
-													"value": (
-														Object
-														.freeze(
-															[
-																Trigger
-																.ERROR_STATE
-															]
-														)
-													),
-
-													"enumerable": false
-												}
-											}
-										)
-									)
-								)
-							)
-						),
-
-						"configurable": false,
-						"enumerable": false,
-						"writable": false
-					}
-				);
-			}
-			else if(
-					(
 							typeof
-							trigger
-						==	"symbol"
-					)
-			){
-				Object
-				.defineProperty(
-					this,
-
-					"$triggerData",
-
-					{
-						"value": (
-							(
-								new WeakMap( )
-							)
-							.set(
-								this,
-
-								(
-									Object
-									.freeze(
-										Object
-										.defineProperties(
-											{ },
-
-											{
-												"trigger": {
-													"value": (
-														Symbol
-														.for(
-															trigger
-															.toString( )
-															.match(
-																SYMBOL_NAMESPACE_PATTERN
-															)[ 1 ]
-														)
-													),
-
-													"enumerable": false
-												},
-
-												"state": {
-													"value": (
-														Object
-														.freeze(
-															[
-																Trigger
-																.ABORTED_STATE
-															]
-														)
-													),
-
-													"enumerable": false
-												}
-											}
-										)
-									)
-								)
-							)
-						),
-
-						"configurable": false,
-						"enumerable": false,
-						"writable": false
-					}
-				);
-			}
-			else if(
-					(
-							typeof
-							trigger
-						== "string"
+							contextData
+						==	"object"
 					)
 
 				&&	(
-							trigger
-							.length
-						>	0
+							contextData
+						!==	null
 					)
 			){
-				Object
-				.defineProperty(
-					this,
-
-					"$triggerData",
-
-					{
-						"value": (
-							(
-								new WeakMap( )
-							)
-							.set(
-								this,
-
-								(
-									Object
-									.freeze(
-										Object
-										.defineProperties(
-											{ },
-
-											{
-												"trigger": {
-													"value": (
-														Symbol
-														.for(
-															trigger
-														)
-													),
-
-													"enumerable": false
-												},
-
-												"state": {
-													"value": (
-														Object
-														.freeze(
-															[
-																Trigger
-																.ABORTED_STATE
-															]
-														)
-													),
-
-													"enumerable": false
-												}
-											}
-										)
-									)
-								)
-							)
-						),
-
-						"configurable": false,
-						"enumerable": false,
-						"writable": false
-					}
-				);
-			}
-			else if(
-					(
-							typeof
-							trigger
-						==	"boolean"
-					)
-			){
-				Object
-				.defineProperty(
-					this,
-
-					"$triggerData",
-
-					{
-						"value": (
-							(
-								new WeakMap( )
-							)
-							.set(
-								this,
-
-								(
-									Object
-									.freeze(
-										Object
-										.defineProperties(
-											{ },
-
-											{
-												"trigger": {
-													"value": (
-														trigger
-													),
-
-													"enumerable": false
-												},
-
-												"state": {
-													"value": (
-														Object
-														.freeze(
-															[
-																(
-																	Trigger
-																	.ABORTED_STATE
-																),
-
-																(
-																		(
-																				(
-																						trigger
-																					===	false
-																				)
-																		)
-																	?	(
-																			Trigger
-																			.UNDEFINED_STATE
-																		)
-																	:	(
-																			undefined
-																		)
-																)
-															]
-															.filter(
-																( state ) => (
-																	(
-																			(
-																					typeof
-																					state
-																				!=	"undefined"
-																			)
-																	)
-																)
-															)
-														)
-													),
-
-													"enumerable": false
-												}
-											}
-										)
-									)
-								)
-							)
-						),
-
-						"configurable": false,
-						"enumerable": false,
-						"writable": false
-					}
+				(
+						this[ TRIGGER_CONTEXT ]
+					=	(
+							contextData
+						)
 				);
 			}
 			else{
-				Object
-				.defineProperty(
-					this,
+				(
+						this[ TRIGGER_CONTEXT ]
+					=	(
+							{ }
+						)
+				);
+			}
 
-					"$triggerData",
-
-					{
-						"value": (
+			providerList
+			.forEach(
+				(
+					( provider ) => {
+						this
+						.dispatchTrigger(
 							(
-								new WeakMap( )
+								provider
 							)
-							.set(
-								this,
+						);
+					}
+				)
+			);
 
-								{ }
+			return	(
+						this
+					);
+		}
+		else{
+			(
+					[
+						contextData,
+						providerList
+					]
+				=	(
+						resolveParameterList
+						.apply(
+							(
+								null
+							),
+
+							(
+								Array
+								.from(
+									(
+										arguments
+									)
+								)
 							)
+						)
+					)
+			);
+
+			const trigger = (
+				new	Trigger(
+						(
+							contextData
 						),
 
-						"configurable": false,
-						"enumerable": false,
-						"writable": false
+						(
+							providerList
+						)
+					)
+			);
+
+			const	{
+						proxy: dispatchTrigger,
+						revoke: revokeDispatchTrigger
 					}
+				=	(
+						Proxy
+						.revocable(
+							(
+								trigger
+								.dispatchTrigger
+							),
+
+							(
+								{
+									"apply": (
+										function apply( dispatchTrigger, scope, parameterList ){
+											return	(
+														dispatchTrigger
+														.apply(
+															(
+																trigger
+															),
+
+															(
+																parameterList
+															)
+														)
+													);
+										}
+									),
+
+									"get": (
+										function get( dispatchTrigger, property, target ){
+											if(
+													(
+															typeof
+															property
+														==	"string"
+													)
+
+												&&	(
+															property
+															.length
+														>	0
+													)
+
+												&&	(
+															(
+																	property
+																in	dispatchTrigger
+															)
+														!==	true
+													)
+											){
+												return	(
+																(
+																	dispatchTrigger
+																	.call(
+																		(
+																			trigger
+																		)
+																	)[ property ]
+																)
+
+															||	(
+																	false
+																)
+														);
+											}
+											else{
+												throw	(
+															new	Error(
+																	(
+																		[
+																			"#unsupported-trigger-state;",
+
+																			"unsupported trigger state;",
+
+																			"@state:",
+																			`${ property };`
+																		]
+																	)
+																)
+														);
+											}
+										}
+									)
+								}
+							)
+						)
+					);
+
+			return	(
+						{
+							"trigger": (
+								trigger
+							),
+
+							"dispatchTrigger": (
+								dispatchTrigger
+							),
+
+							"revokeDispatchTrigger": (
+								revokeDispatchTrigger
+							)
+						}
+					);
+		}
+	}
+);
+
+const TriggerPrototype = (
+		Trigger
+		.prototype
+	=	(
+			Object
+			.create(
+				(
+					Array
+					.prototype
+				)
+			)
+		)
+);
+
+TriggerPrototype.getContext = (
+	function getContext( ){
+		return	(
+					this[ TRIGGER_CONTEXT ]
+				);
+	}
+);
+
+TriggerPrototype.dispatchTrigger = (
+	function dispatchTrigger( state, provider ){
+		const parameterList = (
+			Array
+			.from(
+				(
+					arguments
+				)
+			)
+		);
+
+		(
+				state
+			=	(
+					parameterList
+					.find(
+						(
+							( parameter ) => (
+									(
+											parameter
+										===	true
+									)
+
+								||	(
+											typeof
+											parameter
+										==	"symbol"
+									)
+
+								||	(
+											(
+													typeof
+													parameter
+												==	"string"
+											)
+
+										&&	(
+													state
+													.length
+												>	0
+											)
+									)
+
+								||	(
+											(
+															state
+												instanceof	Error
+											)
+										===	true
+									)
+							)
+						)
+					)
+				)
+		);
+
+		(
+				provider
+			=	(
+					parameterList
+					.find(
+						(
+							( parameter ) => (
+									(
+											typeof
+											parameter
+										==	"function"
+									)
+							)
+						)
+					)
+				)
+		);
+
+		let stateConstantNamespace = (
+			undefined
+		);
+
+		if(
+				(
+						state
+					===	true
+				)
+		){
+			(
+					stateConstantNamespace
+				=	(
+						"ABORTED"
+					)
+			);
+
+			if(
+					(
+							typeof
+							provider
+						!=	"function"
+					)
+
+				&&	(
+							this
+							.some(
+								(
+									( provider ) => (
+											(
+													typeof
+													provider
+												==	"function"
+											)
+
+										&&	(
+													provider
+													.name
+												===	"dispatch"
+											)
+
+										&&	(
+													provider
+													.property
+												===	stateConstantNamespace
+											)
+									)
+								)
+							)
+						!==	true
+					)
+			){
+				const dispatchProvider = (
+					function dispatch( { property, value, source, target } ){
+						(
+								source[ stateConstantNamespace ]
+							=	(
+									true
+								)
+						);
+
+						(
+								target[ stateConstantNamespace ]
+							=	(
+									true
+								)
+						);
+
+						return	(
+									source
+								);
+					}
+				);
+
+				(
+						dispatchProvider
+						.property
+					=	(
+							stateConstantNamespace
+						)
+				);
+
+				this
+				.push(
+					(
+						dispatchProvider
+					)
 				);
 			}
 		}
-		else{
+		else if(
+				(
+						typeof
+						state
+					==	"string"
+				)
+
+			&&	(
+						state
+						.length
+					>	0
+				)
+		){
 			if(
 					(
 							(
-											trigger
-								instanceof	Trigger
+								/^[A-Za-z\$\@][A-Za-z0-9\$\@\_\-\s]*?[A-Za-z0-9]$/
+							)
+							.test(
+								(
+									state
+								)
 							)
 						===	true
 					)
 			){
-				return	trigger;
+				(
+						stateConstantNamespace
+					=	(
+							state
+							.replace(
+								(
+									/([a-z0-9])([A-Z])/g
+								),
+
+								(
+									"$1 $2"
+								)
+							)
+							.replace(
+								(
+									/[\-]+?/g
+								),
+
+								(
+									' '
+								)
+							)
+							.replace(
+								(
+									/[\_]+?/g
+								),
+
+								(
+									' '
+								)
+							)
+							.split(
+								(
+									/[\s]+?/g
+								)
+							)
+							.map(
+								(
+									( stateToken ) => (
+										stateToken
+										.toUpperCase( )
+									)
+								)
+							)
+							.join(
+								(
+									'_'
+								)
+							)
+						)
+				);
 			}
 			else{
-				return	(
-							new	Trigger(
-									trigger
+				throw	(
+							new	Error(
+									(
+										[
+											"#invalid-state-namespace-format;",
+
+											"invalid state namespace format;",
+
+											"@state:",
+											`${ state };`
+										]
+									)
 								)
 						);
 			}
-		}
-	}
-);
 
-Object
-.defineProperty(
-	Trigger,
+			if(
+					(
+							typeof
+							provider
+						!=	"function"
+					)
 
-	"namespace",
-
-	{
-		"value": "Trigger",
-
-		"configurable": false,
-		"enumerable": true,
-		"writable": false
-	}
-);
-
-Object
-.defineProperty(
-	Trigger,
-
-	"type",
-
-	{
-		"value": (
-			Object
-			.freeze(
-				[
-					"class",
-					"object",
-					"trigger"
-				]
-			)
-		),
-
-		"configurable": false,
-		"enumerable": true,
-		"writable": false
-	}
-);
-
-Object
-.defineProperty(
-	Trigger,
-
-	"checkTrigger",
-
-	{
-		"value": (
-			function checkTrigger( entity ){
-				/*;
-					@procedure-definition:
-					@end-procedure-definition
-
-					@parameter-definition:
-						{
-							"entity":"
-								[
-									@type:
-											boolean
-										|	function
-										|	object
-										|	number
-										|	string
-										|	symbol
-										|	undefined
-									@end-type
-
-									<@required;>
-								]
-							"
-						}
-					@end-parameter-definition
-
-					@result-definition:
-						{
-							"result": "
-								[
-									@type:
-											boolean
-								]
-							"
-						}
-					@end-result-definition
-				*/
-
-				return	(
-								(
-										typeof
-										entity
-									==	"object"
-								)
-
-							&&	(
-										(
-												(
-																entity
-													instanceof	Trigger
-												)
-											===	true
-										)
-
-									||	(
-												(
-														typeof
-														(
-															(
-																entity
-																.constructor
-															)
-															.namespace
-														)
-													==	"string"
-												)
-
-											&&	(
-														(
-															(
-																entity
-																.constructor
-																.namespace
-															)
-															.length
-														)
-													>	0
-												)
-
-											&&	(
-														(
-															(
-																entity
-																.constructor
-															)
-															.namespace
-														)
-													===	(
-															Trigger
-															.namespace
-														)
-												)
-										)
-
-									||	(
-												(
-														typeof
-														(
-															entity
-															.$type
-														)
-													==	"object"
-												)
-
-											&&	(
-														entity
-														.$type
-													!==	null
-												)
-
-											&&	(
-														Array
-														.isArray(
-															entity
-															.$type
-														)
-													===	true
-												)
-
-											&&	(
-														(
-															(
-																Trigger
-																.type
-															)
-															.every(
-																( type ) => (
-																	(
-																		entity
-																		.$type
-																	)
-																	.includes(
-																		type
-																	)
-																)
-															)
-														)
-													===	true
-												)
-										)
-								)
-						);
-			}
-		),
-
-		"configurable": false,
-		"enumerable": false,
-		"writable": false
-	}
-);
-
-Object
-.defineProperty(
-	Trigger,
-
-	"ABORTED_STATE",
-
-	{
-		"value": "aborted",
-
-		"configurable": false,
-		"enumerable": true,
-		"writable": false
-	}
-);
-
-Object
-.defineProperty(
-	Trigger,
-
-	"ERROR_STATE",
-
-	{
-		"value": "error",
-
-		"configurable": false,
-		"enumerable": true,
-		"writable": false
-	}
-);
-
-Object
-.defineProperty(
-	Trigger,
-
-	"UNDEFINED_STATE",
-
-	{
-		"value": "undefined",
-
-		"configurable": false,
-		"enumerable": true,
-		"writable": false
-	}
-);
-
-Trigger.prototype.setTrigger = (
-	function setTrigger( trigger ){
-		/*;
-			@procedure-definition:
-			@end-procedure-definition
-
-			@parameter-definition:
-				{
-					"trigger": "
-						[
-							@type:
-									boolean
-								|	object as Error
-								|	string
-								|	symbol
-							@end-type
-						]
-					"
-				}
-			@end-parameter-definition
-
-			@trigger-definition:
-				{
-					"trigger": "
-						[
-							@type:
-									object as Error
-							@end-type
-
-							<@tag: set-trigger-done;>
-							<@tag: invalid-set-trigger;>
-							<@tag: undefined-set-trigger-flow;>
-						]
-					"
-				}
-			@end-trigger-definition
-
-			@result-definition:
-				{
-					"result": "
-						[
-							@type:
-									object as Trigger
-							@end-type
-						]
-					"
-				}
-			@end-result-definition
-		*/
-
-		if(
-				(
-						typeof
-						(
+				&&	(
 							this
-							.getScope( )
-						)
-						.trigger
-					!=	"undefined"
-				)
-		){
-			throw	(
-						new	Error(
-								[
-									"#set-trigger-done;",
-
-									"cannot set trigger",
-									"set trigger done",
-
-									`@trigger: ${ this.getScope( ).trigger }`
-								]
-							)
-					);
-		}
-
-		if(
-				(
-						typeof
-						trigger
-					!=	"boolean"
-				)
-
-			&&	(
-						(
-								typeof
-								trigger
-							!=	"object"
-						)
-
-					||	(
-								trigger
-							===	null
-						)
-
-					||	(
+							.some(
 								(
-												trigger
-									instanceof	Error
+									( provider ) => (
+											(
+													typeof
+													provider
+												==	"function"
+											)
+
+										&&	(
+													provider
+													.name
+												===	"dispatch"
+											)
+
+										&&	(
+													provider
+													.property
+												===	stateConstantNamespace
+											)
+									)
 								)
-							!==	true
-						)
-				)
-
-			&&	(
-						typeof
-						trigger
-					!=	"symbol"
-				)
-
-			&&	(
-						(
-								typeof
-								trigger
-							!=	"string"
-						)
-
-					||	(
-								trigger
-								.length
-							<=	0
-						)
-				)
-		){
-			throw	(
-						new	Error(
-								[
-									"#invalid-set-trigger;",
-
-									"cannot set trigger",
-									"invalid trigger",
-
-									`@trigger: ${ trigger }`
-								]
 							)
-					);
-		}
+						!==	true
+					)
+			){
+				const dispatchProvider = (
+					function dispatch( { property, value, source, target } ){
+						(
+								source[ stateConstantNamespace ]
+							=	(
+									true
+								)
+						);
 
-		if(
+						(
+								target[ stateConstantNamespace ]
+							=	(
+									true
+								)
+						);
+
+						return	(
+									source
+								);
+					}
+				);
+
+				(
+						dispatchProvider
+						.property
+					=	(
+							stateConstantNamespace
+						)
+				);
+
+				this
+				.push(
+					(
+						dispatchProvider
+					)
+				);
+			}
+		}
+		else if(
 				(
 						(
-										trigger
+										state
 							instanceof	Error
 						)
 					===	true
 				)
 		){
-			this
-			.setScope(
-				Object
-				.freeze(
-					Object
-					.defineProperties(
-						{ },
-
-						{
-							"trigger": {
-								"value": (
-									trigger
-								),
-
-								"enumerable": false
-							},
-
-							"state": {
-								"value": (
-									Object
-									.freeze(
-										[
-											Trigger
-											.ERROR_STATE
-										]
-									)
-								),
-
-								"enumerable": false
-							}
-						}
-					)
-				)
-			);
-		}
-		else if(
-				(
-						typeof
-						trigger
-					==	"symbol"
-				)
-		){
-			this
-			.setScope(
-				Object
-				.freeze(
-					Object
-					.defineProperties(
-						{ },
-
-						{
-							"trigger": {
-								"value": (
-									Symbol
-									.for(
-										trigger
-										.toString( )
-										.match(
-											SYMBOL_NAMESPACE_PATTERN
-										)[ 1 ]
-									)
-								),
-
-								"enumerable": false
-							},
-
-							"state": {
-								"value": (
-									Object
-									.freeze(
-										[
-											Trigger
-											.ABORTED_STATE
-										]
-									)
-								),
-
-								"enumerable": false
-							}
-						}
-					)
-				)
-			);
-		}
-		else if(
-				(
-						typeof
-						trigger
-					==	"string"
-				)
-		){
-			this
-			.setScope(
-				Object
-				.freeze(
-					Object
-					.defineProperties(
-						{ },
-
-						{
-							"trigger": {
-								"value": (
-									Symbol
-									.for(
-										trigger
-									)
-								),
-
-								"enumerable": false
-							},
-
-							"state": {
-								"value": (
-									Object
-									.freeze(
-										[
-											Trigger
-											.ABORTED_STATE
-										]
-									)
-								),
-
-								"enumerable": false
-							}
-						}
-					)
-				)
-			);
-		}
-		else if(
-				(
-						typeof
-						trigger
-					==	"boolean"
-				)
-		){
-			this
-			.setScope(
-				Object
-				.freeze(
-					Object
-					.defineProperties(
-						{ },
-
-						{
-							"trigger": {
-								"value": (
-									trigger
-								),
-
-								"enumerable": false
-							},
-
-							"state": {
-								"value": (
-									Object
-									.freeze(
-										[
-											(
-												Trigger
-												.ABORTED_STATE
-											),
-
-											(
-													(
-															(
-																	trigger
-																===	false
-															)
-													)
-												?	(
-														Trigger
-														.UNDEFINED_STATE
-													)
-												:	(
-														undefined
-													)
-											)
-										]
-										.filter(
-											( state ) => (
-												(
-														(
-																typeof
-																state
-															!=	"undefined"
-														)
-												)
-											)
-										)
-									)
-								),
-
-								"enumerable": false
-							}
-						}
-					)
-				)
-			);
-		}
-		else{
-			throw	(
-						new	Error(
-								[
-									"#undefined-set-trigger-flow;",
-
-									"cannot set trigger",
-									"undefined behavior",
-
-									`@trigger: ${ trigger }`
-								]
-							)
-					);
-		}
-
-		return	this;
-	}
-);
-
-Trigger.prototype.getTrigger = (
-	function getTrigger( ){
-		/*;
-			@procedure-definition:
-			@end-procedure-definition
-
-			@result-definition:
-				{
-					"result": "
-						[
-							@type:
-									boolean
-								|	object as Error
-								|	symbol
-							@end-type
-						]
-					"
-				}
-			@end-result-definition
-		*/
-
-		return	(
-					(
-						this
-						.getScope( )
-					)
-					.trigger
-				);
-	}
-);
-
-Trigger.prototype.checkTrigger = (
-	function checkTrigger( triggerQuery ){
-		/*;
-			@procedure-definition:
-			@end-procedure-definition
-
-			@parameter-definition:
-				{
-					"triggerQuery": "
-						[
-							@type:
-									boolean
-								|	function as Boolean,Error,Symbol
-								|	object as Error
-								|	string
-								|	symbol
-							@end-type
-
-							<@optional;>
-						]
-					"
-				}
-			@end-parameter-definition
-
-			@result-definition:
-				{
-					"result": "
-						[
-							@type:
-									boolean
-							@end-type
-						]
-					"
-				}
-			@end-result-definition
-		*/
-
-		const trigger = (
-			this
-			.getTrigger( )
-		);
-
-		if(
-				(
-						typeof
-						triggerQuery
-					==	"undefined"
-				)
-
-			||	(
-						arguments
-						.length
-					===	0
-				)
-		){
-			return	(
-							(
-									(
-													trigger
-										instanceof	Error
-									)
-								===	true
-							)
-
-						||	(
-									typeof
-									trigger
-								==	"symbol"
-							)
-
-						||	(
-									typeof
-									trigger
-								==	"boolean"
-							)
-					);
-		}
-		else{
-			if(
-					(
-							triggerQuery
-						===	Error
-					)
-			){
-				return	(
-								(
-										(
-														trigger
-											instanceof	Error
-										)
-									===	true
-								)
-						);
-			}
-			else if(
-					(
-							triggerQuery
-						===	Symbol
-					)
-			){
-				return	(
-								(
-										typeof
-										trigger
-									==	"symbol"
-								)
-						);
-			}
-			else if(
-					(
-							triggerQuery
-						===	Boolean
-					)
-			){
-				return	(
-								(
-										typeof
-										trigger
-									==	"boolean"
-								)
-						);
-			}
-			else{
-				if(
-						(
-								typeof
-								triggerQuery
-							==	"symbol"
-						)
-				){
-
-				}
-				else if(
-						(
-								typeof
-								triggerQuery
-							==	"string"
-						)
-
-					&&	(
-								triggerQuery
-								.length
-							>	0
-						)
-				){
-					return	(
-									(
-											trigger
-										===	(
-												Symbol
-												.for(
-													triggerQuery
-												)
-											)
-									)
-							);
-				}
-				else{
-					return	(
-									(
-											trigger
-										===	triggerQuery
-									)
-							);
-				}
-			}
-		}
-	}
-);
-
-Trigger.prototype.checkState = (
-	function checkState( stateQuery ){
-		/*;
-			@procedure-definition:
-			@end-procedure-definition
-
-			@parameter-definition:
-				{
-					"stateQuery": "
-						[
-							@type:
-									string
-							@end-type
-
-							<@optional;>
-						]
-					"
-				}
-			@end-parameter-definition
-
-			@result-definition:
-				{
-					"result": "
-						[
-							@type:
-									boolean
-							@end-type
-						]
-					"
-				}
-			@end-result-definition
-		*/
-
-		if(
-				(
-						typeof
-						stateQuery
-					==	"string"
-				)
-
-			&&	(
-						stateQuery
-						.length
-					>	0
-				)
-		){
-			return	(
-							(
-									stateQuery
-								===	(
-										Trigger
-										.ERROR_STATE
-									)
-							)
-
-						||	(
-									stateQuery
-								===	(
-										Trigger
-										.ABORTED_STATE
-									)
-							)
-
-						||	(
-									stateQuery
-								===	(
-										Trigger
-										.UNDEFINED_STATE
-									)
-							)
-					);
-		}
-		else{
-			return	undefined;
-		}
-	}
-);
-
-Trigger.prototype.setScope = (
-	function setScope( scopeData ){
-		/*;
-			@procedure-definition:
-				Set trigger data container scope.
-			@end-procedure-definition
-
-			@parameter-definition:
-				{
-					"scopeData": "
-						[
-							@type:
-									object
-							@end-type
-
-							<@required;>
-						]
-					"
-				}
-			@end-parameter-definition
-
-			@trigger-definition:
-				{
-					"trigger": "
-						[
-							@type:
-									object as Error
-							@end-type
-
-							<@tag: invalid-set-trigger-scope-data;>
-						]
-					"
-				}
-			@end-trigger-definition
-
-			@result-definition:
-				{
-					"result": "
-						[
-							@type:
-									object as Trigger
-							@end-type
-						]
-					"
-				}
-			@end-result-definition
-		*/
-
-		if(
-				(
-						typeof
-						scopeData
-					==	"object"
-				)
-
-			&&	(
-						scopeData
-					!==	null
-				)
-		){
 			(
-				this
-				.$triggerData
-			)
-			.set(
-				this,
-				scopeData
+					stateConstantNamespace
+				=	(
+						"ERROR"
+					)
 			);
-		}
-		else{
-			throw	(
-						new	Error(
-								[
-									"#invalid-set-trigger-scope-data;",
-
-									"cannot set trigger scope data",
-									"invalid scope data",
-
-									`@scope-data: ${ scopeData }`
-								]
-							)
-					);
-		}
-
-		return	this;
-	}
-);
-
-Trigger.prototype.getScope = (
-	function getScope( ){
-		/*;
-			@procedure-definition:
-				Get trigger data container scope.
-			@end-procedure-definition
-
-			@result-definition:
-				{
-					"result": "
-						[
-							@type:
-									object
-							@end-type
-						]
-					"
-				}
-			@end-result-definition
-		*/
-
-		return	(
-					(
-						this
-						.$triggerData
-					)
-					.get(
-						this
-					)
-				);
-	}
-);
-
-Trigger.prototype.valueOf = (
-	function valueOf( ){
-		/*;
-			@procedure-definition:
-			@end-procedure-definition
-
-			@result-definition:
-				{
-					"result": "
-						[
-							@type:
-									object
-							@end-type
-						]
-					"
-				}
-			@end-result-definition
-		*/
-
-		return	(
-					Object
-					.freeze(
-						Object
-						.assign(
-							{ },
-
-							(
-								this
-								.getScope( )
-							)
-						)
-					)
-				);
-	}
-);
-
-Trigger.prototype.toString = (
-	function toString( ){
-		/*;
-			@procedure-definition:
-			@end-procedure-definition
-
-			@result-definition:
-				{
-					"result": "
-						[
-							@type:
-									string
-							@end-type
-						]
-					"
-				}
-			@end-result-definition
-		*/
-
-		if(
-				(
-						typeof
-						require
-					==	"function"
-				)
-		){
-			const util = require( "util" );
 
 			if(
 					(
 							typeof
-							(
-								util
-								.inspect
+							provider
+						!=	"function"
+					)
+
+				&&	(
+							this
+							.some(
+								(
+									( provider ) => (
+											(
+													typeof
+													provider
+												==	"function"
+											)
+
+										&&	(
+													provider
+													.name
+												===	"dispatch"
+											)
+
+										&&	(
+													provider
+													.property
+												===	stateConstantNamespace
+											)
+									)
+								)
 							)
-						==	"function"
+						!==	true
 					)
 			){
-				return	(
-							util
-							.inspect(
-								this
-								.getScope( )
-							)
+				const dispatchProvider = (
+					function dispatch( { property, value, source, target } ){
+						(
+								source[ stateConstantNamespace ]
+							=	(
+									state
+								)
 						);
+
+						(
+								target[ stateConstantNamespace ]
+							=	(
+									state
+								)
+						);
+
+						return	(
+									source
+								);
+					}
+				);
+
+				(
+						dispatchProvider
+						.property
+					=	(
+							stateConstantNamespace
+						)
+				);
+
+				this
+				.push(
+					(
+						dispatchProvider
+					)
+				);
 			}
 		}
 
+		if(
+				(
+						typeof
+						provider
+					==	"function"
+				)
+		){
+			if(
+					(
+							provider
+							.name
+						===	"handle"
+					)
+			){
+				(
+						provider
+						.property
+					=	(
+							stateConstantNamespace
+						)
+				);
+
+				this
+				.push(
+					(
+						provider
+					)
+				);
+			}
+			else if(
+					(
+							provider
+							.name
+						===	"dispatch"
+					)
+			){
+				(
+						provider
+						.property
+					=	(
+							stateConstantNamespace
+						)
+				);
+
+				this
+				.push(
+					(
+						provider
+					)
+				);
+			}
+			else{
+				const handleProvider = (
+					function handle( { property, value, source, target } ){
+						return	(
+									provider(
+										(
+											{
+												"property": (
+													property
+												),
+
+												"value": (
+													value
+												),
+
+												"source": (
+													source
+												),
+
+												"target": (
+													target
+												)
+											}
+										)
+									)
+								);
+					}
+				);
+
+				(
+						handleProvider
+						.property
+					=	(
+							stateConstantNamespace
+						)
+				);
+
+				this
+				.push(
+					(
+						handleProvider
+					)
+				);
+			}
+		}
+
+		if(
+				(
+						arguments
+						.length
+					<=	0
+				)
+
+			||	(
+						(
+								typeof
+								stateConstantNamespace
+							==	"string"
+						)
+
+					&&	(
+								stateConstantNamespace
+								.length
+							>	0
+						)
+				)
+		){
+			return	(
+						Object
+						.assign(
+							(
+								Object
+								.create(
+									(
+										this
+									)
+								)
+							),
+
+							(
+								this
+								.reduce(
+									(
+										( source, provider ) => {
+											if(
+													(
+															typeof
+															provider
+														==	"function"
+													)
+
+												&&	(
+															provider
+															.name
+														===	"dispatch"
+													)
+											){
+												if(
+														(
+																typeof
+																stateConstantNamespace
+															==	"string"
+														)
+
+													&&	(
+																stateConstantNamespace
+																.length
+															>	0
+														)
+												){
+													if(
+															(
+																	provider
+																	.property
+																===	stateConstantNamespace
+															)
+													){
+														return	(
+																	provider(
+																		(
+																			{
+																				"source": (
+																					source
+																				),
+
+																				"target": (
+																					this
+																					.getContext( )
+																				)
+																			}
+																		)
+																	)
+																);
+													}
+													else{
+														return	(
+																	source
+																);
+													}
+												}
+
+												return	(
+															provider(
+																(
+																	{
+																		"source": (
+																			source
+																		),
+
+																		"target": (
+																			this
+																			.getContext( )
+																		)
+																	}
+																)
+															)
+														);
+											}
+											else{
+												return	(
+															source
+														);
+											}
+										}
+									),
+
+									(
+										{ }
+									)
+								)
+							)
+						)
+					);
+		}
+
+		return	(
+					this
+				);
+	}
+);
+
+TriggerPrototype.cleanTrigger = (
+	function cleanTrigger( ){
+		while(
+				(
+						this
+						.length
+					>	0
+				)
+		){
+			this
+			.pop( )
+		}
+
+		return	(
+					this
+				);
+	}
+);
+
+TriggerPrototype.valueOf = (
+	function valueOf( ){
+		return	(
+					this
+					.dispatchTrigger( )
+				);
+	}
+);
+
+TriggerPrototype.toJSON = (
+	function toJSON( ){
+		return	(
+					this
+					.valueOf( )
+				);
+	}
+);
+
+TriggerPrototype.toString = (
+	function toString( ){
 		return	(
 					JSON
 					.stringify(
-						this
-						.getScope( )
+						(
+							this
+							.toJSON( )
+						)
 					)
 				);
 	}

@@ -1,0 +1,293 @@
+{
+	"module": [
+		{
+			"title": "Trigger",
+			"description": [
+				"Trigger class interface for procedure issue."
+			],
+			"namespace": "trigger",
+			"property": [
+				"Trigger"
+			],
+			"type": [
+				"class"
+			],
+			"format": [
+				"Trigger( contextData, providerList );"
+			],
+			"sample": [
+				"const { trigger, dispatchTrigger, revokeDispatchTrigger } = Trigger( contextData, providerList );"
+			],
+
+			"parameter": [
+				{
+					"title": "Context Data",
+					"description": [
+						"Data parameter context."
+					],
+					"namespace": "context-data",
+					"property": [
+						"contextData"
+					],
+					"type": [
+						"object"
+					],
+					"format": [
+						"Trigger( contextData );"
+					],
+					"sample": [
+						"const { trigger, dispatchTrigger, revokeDispatchTrigger } = Trigger( { 'hello': 'world' } );"
+					]
+				},
+
+				{
+					"title": "Provider List",
+					"description": [
+						"Trigger dispatch provider."
+					],
+					"namespace": "provider-list",
+					"property": [
+						"providerList"
+					],
+					"type": [
+						"object:as:Array:of:function"
+					],
+					"format": [
+
+					],
+					"sample": [
+
+					]
+				}
+			],
+
+			"result": [
+				{
+					"title": "Result",
+					"description": [
+
+					],
+					"namespace": "result",
+					"alias": "result",
+					"property": [
+						"result"
+					],
+					"type": [
+						"object:as:Trigger"
+					],
+					"format": [
+
+					],
+					"sample": [
+
+					]
+				}
+			],
+
+			"trigger": [
+				{
+					"title": "trigger",
+					"description": [
+
+					],
+					"namespace": "trigger",
+					"alias": "trigger",
+					"property": [
+						"trigger"
+					],
+					"type": [
+						"object:as:Error"
+					],
+					"format": [
+
+					],
+					"sample": [
+
+					]
+				}
+			],
+
+			"procedure": [
+				{
+					"title": "",
+					"description": [
+
+					],
+					"namespace": "",
+					"alias": "",
+					"property": [
+
+					],
+					"type": [
+
+					],
+					"format": [
+
+					],
+					"sample": [
+
+					],
+
+					"parameter": [
+						{
+							"title": "",
+							"description": [
+
+							],
+							"namespace": "",
+							"alias": "",
+							"property": [
+
+							],
+							"type": [
+
+							],
+							"format": [
+
+							],
+							"sample": [
+
+							]
+						}
+					],
+
+					"trigger": [
+						{
+							"title": "Trigger",
+							"description": [
+
+							],
+							"namespace": "trigger",
+							"alias": "trigger",
+							"property": [
+								"trigger"
+							],
+							"type": [
+								"object:as:Trigger"
+							],
+							"format": [
+
+							],
+							"sample": [
+
+							]
+						}
+					],
+
+					"trigger": [
+						{
+							"title": "trigger",
+							"description": [
+
+							],
+							"namespace": "trigger",
+							"alias": "trigger",
+							"property": [
+								"trigger"
+							],
+							"type": [
+								"object:as:Error"
+							],
+							"format": [
+
+							],
+							"sample": [
+
+							]
+						}
+					]
+				},
+
+				{
+					"title": "",
+					"description": [
+
+					],
+					"namespace": "",
+					"alias": "",
+					"property": [
+
+					],
+					"type": [
+
+					],
+					"format": [
+
+					],
+					"sample": [
+
+					],
+
+					"parameter": [
+						{
+							"title": "",
+							"description": [
+
+							],
+							"namespace": "",
+							"alias": "",
+							"property": [
+
+							],
+							"type": [
+
+							],
+							"format": [
+
+							],
+							"sample": [
+
+							]
+						}
+					],
+
+					"trigger": [
+						{
+							"title": "Trigger",
+							"description": [
+
+							],
+							"namespace": "trigger",
+							"alias": "trigger",
+							"property": [
+								"trigger"
+							],
+							"type": [
+								"object:as:Trigger"
+							],
+							"format": [
+
+							],
+							"sample": [
+
+							]
+						}
+					],
+
+					"trigger": [
+						{
+							"title": "trigger",
+							"description": [
+
+							],
+							"namespace": "trigger",
+							"alias": "trigger",
+							"property": [
+								"trigger"
+							],
+							"type": [
+								"object:as:Error"
+							],
+							"format": [
+
+							],
+							"sample": [
+
+							]
+						}
+					]
+				}
+			]
+		}
+	]
+}

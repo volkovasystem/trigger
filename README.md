@@ -1,2 +1,3 @@
 # trigger
-Trigger class interface for procedure issue flow.
+
+Trigger class interface for procedure issue.
