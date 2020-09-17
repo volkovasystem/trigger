@@ -1,37 +1,35 @@
 {
-  "name": "@volkovasystem/trigger",
-  "version": "0.0.2",
-  "description": "Trigger class interface for procedure issue flow.",
-  "main": "trigger.js",
-  "scripts": {
-    "test": "node ./trigger.test.js",
-    "clean": "rm -Rfv ./node_modules && rm ./trigger.js",
-    "compress": "npx terser ./trigger.module.js --compress --comments all --output ./trigger.js",
-    "modularize": "npx babel --plugins @babel/plugin-transform-modules-umd ./trigger.js --out-file ./trigger.js",
-    "minify": "npx terser ./trigger.js --compress --comments all --output ./trigger.js",
-    "build": "npm run compress && npm run modularize && npm run minify",
-    "deploy": "npm run clean && npm install && npm run build && npm test",
-    "prepublishOnly": "npm run clean && npm install && npm run build && npm test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/volkovasystem/trigger.git"
-  },
-  "keywords": [
-    "trigger",
-    "error",
-    "issue",
-    "abort"
-  ],
-  "author": "Richeve S. Bebedor <richeve.bebedor@gmail.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/volkovasystem/trigger/issues"
-  },
-  "homepage": "https://github.com/volkovasystem/trigger#readme",
-  "devDependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.9.0",
-    "@babel/plugin-transform-modules-umd": "^7.9.0"
-  }
+	"name": "@volkovasystem/trigger",
+	"alias": "trigger",
+	"version": "0.0.3",
+	"description": "Trigger class interface for procedure issue.",
+	"main": "trigger.js",
+	"scripts": {
+		"clean": "rm -rf ./node_modules || true && rm -fv ./package-lock.json || true && npm cache clean --force",
+		"reset": "npm run clean && rm -rfv ./trigger.js || true && rm -rfv ./.build || true && rm -rfv ./.test || true",
+		"bundle": "npx parcel build ./*.module.js --no-cache --no-source-maps --no-minify --out-dir ./.build --out-file ./trigger.bundle.js --global Trigger",
+		"compress": "npx terser ./.build/trigger.bundle.js --compress --keep-classnames --keep-fnames --output ./.build/trigger.js",
+		"resolve": "mv ./.build/trigger.js ./trigger.js && rm -rfv ./.build || true",
+		"build": "npm run bundle && npm run compress && npm run resolve",
+		"test": "node ./trigger.test.js",
+		"stage": "npm run reset && npm install && npm run build && npm test && npm run clean",
+		"prepublishOnly": "npm run stage"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/volkovasystem/trigger.git"
+	},
+	"keywords": [
+		"trigger",
+		"parameter"
+	],
+	"author": "Richeve S. Bebedor <richeve.bebedor@gmail.com>",
+	"contributors": [
+		"Richeve S. Bebedor <richeve.bebedor@gmail.com>"
+	],
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/volkovasystem/trigger/issues"
+	},
+	"homepage": "https://github.com/volkovasystem/trigger#readme"
 }
