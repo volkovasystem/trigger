@@ -402,6 +402,17 @@ const Trigger = (
 																)
 														);
 											}
+											else if(
+													(
+															property
+														===	"revokeDispatchTrigger"
+													)
+											){
+												return	(
+															trigger
+															.revokeDispatchTrigger
+														);
+											}
 											else{
 												throw	(
 															new	Error(
@@ -419,11 +430,29 @@ const Trigger = (
 														);
 											}
 										}
+									),
+
+									"getPrototypeOf": (
+										function getPrototypeOf( target ){
+											return	(
+														Trigger
+														.prototype
+													);
+										}
 									)
 								}
 							)
 						)
 					);
+
+
+			(
+					trigger
+					.revokeDispatchTrigger
+				=	(
+						revokeDispatchTrigger
+					)
+			);
 
 			return	(
 						{
@@ -1151,8 +1180,34 @@ TriggerPrototype.valueOf = (
 TriggerPrototype.toJSON = (
 	function toJSON( ){
 		return	(
-					this
-					.valueOf( )
+					Object
+					.entries(
+						(
+							this
+							.valueOf( )
+						)
+					)
+					.reduce(
+						(
+							( source, [ property, value ] ) => (
+								(
+										source[ property ]
+									=	(
+											value
+											.toString( )
+										)
+								),
+
+								(
+									source
+								)
+							)
+						),
+
+						(
+							{ }
+						)
+					)
 				);
 	}
 );
