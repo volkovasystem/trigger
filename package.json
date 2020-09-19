@@ -1,7 +1,7 @@
 {
 	"name": "@volkovasystem/trigger",
 	"alias": "trigger",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "Trigger class interface for procedure issue.",
 	"main": "trigger.js",
 	"scripts": {
