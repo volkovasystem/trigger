@@ -91,127 +91,128 @@ const Trigger = (
 		*/
 
 		const resolveParameterList = (
-			function resolveParameterList( ){
-				const parameterList = (
-					Array
-					.from(
-						(
-							arguments
-						)
-					)
-				);
-
-				const contextCache = (
-					Object
-					.assign(
-						...	(
-								parameterList
-								.filter(
-									(
-										( parameter ) => (
-												(
-														typeof
-														parameter
-													==	"object"
-												)
-
-											&&	(
-														parameter
-													!==	null
-												)
-
-											&&	(
-														Array
-														.isArray(
-															(
-																parameter
-															)
-														)
-													!==	true
-												)
-										)
-									)
-								)
-								.concat(
-									(
-										[
-											{ }
-										]
-									)
+			function resolveParameterList( parameterList ){
+				(
+						parameterList
+					=	(
+							Array
+							.from(
+								(
+									arguments
 								)
 							)
-					)
+						)
 				);
 
-				const providerCache = (
-					parameterList
-					.reduce(
-						(
-							( list, parameter ) => {
-								if(
-										(
-												typeof
-												parameter
-											==	"function"
-										)
-								){
-									list
-									.push(
-										(
-											parameter
-										)
-									);
-								}
-								else if(
-										(
-												Array
-												.isArray(
+				return	(
+							[
+								(
+									Object
+									.assign(
+										...	(
+												parameterList
+												.filter(
 													(
-														parameter
+														( parameter ) => (
+																(
+																		typeof
+																		parameter
+																	==	"object"
+																)
+
+															&&	(
+																		parameter
+																	!==	null
+																)
+
+															&&	(
+																		Array
+																		.isArray(
+																			(
+																				parameter
+																			)
+																		)
+																	!==	true
+																)
+														)
 													)
 												)
-											===	true
-										)
-								){
-									parameter
-									.forEach(
+												.concat(
+													(
+														[
+															{ }
+														]
+													)
+												)
+											)
+									)
+								),
+
+								(
+									parameterList
+									.reduce(
 										(
-											( provider ) => {
+											( list, parameter ) => {
 												if(
 														(
 																typeof
-																provider
+																parameter
 															==	"function"
 														)
 												){
 													list
 													.push(
 														(
-															provider
+															parameter
 														)
 													);
 												}
+												else
+												if(
+														(
+																Array
+																.isArray(
+																	(
+																		parameter
+																	)
+																)
+															===	true
+														)
+												){
+													parameter
+													.forEach(
+														(
+															( provider ) => {
+																if(
+																		(
+																				typeof
+																				provider
+																			==	"function"
+																		)
+																){
+																	list
+																	.push(
+																		(
+																			provider
+																		)
+																	);
+																}
+															}
+														)
+													);
+												}
+
+												return	(
+															list
+														);
 											}
+										),
+
+										(
+											[ ]
 										)
-									);
-								}
-
-								return	(
-											list
-										);
-							}
-						),
-
-						(
-							[ ]
-						)
-					)
-				);
-
-				return	(
-							[
-								contextCache,
-								providerCache
+									)
+								)
 							]
 						);
 			}
@@ -402,31 +403,20 @@ const Trigger = (
 																)
 														);
 											}
-											else if(
+											else
+											if(
 													(
 															property
 														===	"revokeDispatchTrigger"
 													)
 											){
 												return	(
-															trigger
-															.revokeDispatchTrigger
+															revokeDispatchTrigger
 														);
 											}
 											else{
-												throw	(
-															new	Error(
-																	(
-																		[
-																			"#unsupported-trigger-state;",
-
-																			"unsupported trigger state;",
-
-																			"@state:",
-																			`${ property };`
-																		]
-																	)
-																)
+												return	(
+															trigger[ property ]
 														);
 											}
 										}
@@ -659,7 +649,8 @@ TriggerPrototype.dispatchTrigger = (
 				);
 			}
 		}
-		else if(
+		else
+		if(
 				(
 						typeof
 						state
@@ -827,7 +818,8 @@ TriggerPrototype.dispatchTrigger = (
 				);
 			}
 		}
-		else if(
+		else
+		if(
 				(
 						(
 										state
@@ -946,7 +938,8 @@ TriggerPrototype.dispatchTrigger = (
 					)
 				);
 			}
-			else if(
+			else
+			if(
 					(
 							provider
 							.name
